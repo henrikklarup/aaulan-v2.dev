@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AAULANHOMEPAGEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AAULANHOMEPAGEModelStoreContainer">
+    <EntitySet Name="Event" EntityType="AAULANHOMEPAGEModel.Store.Event" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Games" EntityType="AAULANHOMEPAGEModel.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LAN" EntityType="AAULANHOMEPAGEModel.Store.LAN" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Mad" EntityType="AAULANHOMEPAGEModel.Store.Mad" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="AAULANHOMEPAGEModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Seat" EntityType="AAULANHOMEPAGEModel.Store.Seat" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SeatingPlan" EntityType="AAULANHOMEPAGEModel.Store.SeatingPlan" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PizzaSet" EntityType="AAULANHOMEPAGEModel.Store.PizzaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TeamSet" EntityType="AAULANHOMEPAGEModel.Store.TeamSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TeamMemberSet" EntityType="AAULANHOMEPAGEModel.Store.TeamMemberSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TeamMemberTeam" EntityType="AAULANHOMEPAGEModel.Store.TeamMemberTeam" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EventTeam" EntityType="AAULANHOMEPAGEModel.Store.EventTeam" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Event_Games" Association="AAULANHOMEPAGEModel.Store.FK_Event_Games">
+      <End Role="Games" EntitySet="Games" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_LAN" Association="AAULANHOMEPAGEModel.Store.FK_Event_LAN">
+      <End Role="LAN" EntitySet="LAN" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="SeatSeatingPlan" Association="AAULANHOMEPAGEModel.Store.SeatSeatingPlan">
+      <End Role="Seat" EntitySet="Seat" />
+      <End Role="SeatingPlan" EntitySet="SeatingPlan" />
+    </AssociationSet>
+    <AssociationSet Name="SeatingPlanLAN" Association="AAULANHOMEPAGEModel.Store.SeatingPlanLAN">
+      <End Role="SeatingPlan" EntitySet="SeatingPlan" />
+      <End Role="LAN" EntitySet="LAN" />
+    </AssociationSet>
+    <AssociationSet Name="UserSeat" Association="AAULANHOMEPAGEModel.Store.UserSeat">
+      <End Role="User" EntitySet="User" />
+      <End Role="Seat" EntitySet="Seat" />
+    </AssociationSet>
+    <AssociationSet Name="TeamMemberUser" Association="AAULANHOMEPAGEModel.Store.TeamMemberUser">
+      <End Role="TeamMember" EntitySet="TeamMemberSet" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeamMemberTeam_TeamMember" Association="AAULANHOMEPAGEModel.Store.FK_TeamMemberTeam_TeamMember">
+      <End Role="TeamMember" EntitySet="TeamMemberSet" />
+      <End Role="TeamMemberTeam" EntitySet="TeamMemberTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeamMemberTeam_Team" Association="AAULANHOMEPAGEModel.Store.FK_TeamMemberTeam_Team">
+      <End Role="Team" EntitySet="TeamSet" />
+      <End Role="TeamMemberTeam" EntitySet="TeamMemberTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTeam_Event" Association="AAULANHOMEPAGEModel.Store.FK_EventTeam_Event">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="EventTeam" EntitySet="EventTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTeam_Team" Association="AAULANHOMEPAGEModel.Store.FK_EventTeam_Team">
+      <End Role="Team" EntitySet="TeamSet" />
+      <End Role="EventTeam" EntitySet="EventTeam" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="LANID" Type="int" Nullable="false" />
+    <Property Name="GAMEID" Type="int" Nullable="true" />
+    <Property Name="Description" Type="nchar" Nullable="true" MaxLength="300" />
+    <Property Name="Rules" Type="nchar" Nullable="true" MaxLength="300" />
+    <Property Name="FoodID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nchar" Nullable="false" MaxLength="300" />
+    <Property Name="DL_Link" Type="nchar" Nullable="true" MaxLength="300" />
+    <Property Name="Name" Type="nchar" Nullable="false" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="LAN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nchar" Nullable="true" MaxLength="300" />
+    <Property Name="Location" Type="nchar" Nullable="true" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Mad">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Name" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="Paid" Type="bit" Nullable="false" />
+    <Property Name="Note" Type="nchar" Nullable="true" MaxLength="50" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="EVENTID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nchar" Nullable="false" MaxLength="25" />
+    <Property Name="Password" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="Role" Type="nchar" Nullable="false" MaxLength="15" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Seat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Taken" Type="bit" Nullable="false" />
+    <Property Name="SeatingPlanId" Type="int" Nullable="false" />
+    <Property Name="User_Username" Type="nchar" MaxLength="25" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SeatingPlan">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="LANID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PizzaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeamSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StandaloneTeam" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeamMemberSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TeamId" Type="int" Nullable="false" />
+    <Property Name="User_Username" Type="nchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeamMemberTeam">
+    <Key>
+      <PropertyRef Name="TeamMember_Id" />
+      <PropertyRef Name="Team_Id" />
+    </Key>
+    <Property Name="TeamMember_Id" Type="int" Nullable="false" />
+    <Property Name="Team_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventTeam">
+    <Key>
+      <PropertyRef Name="Event_ID" />
+      <PropertyRef Name="Team_Id" />
+    </Key>
+    <Property Name="Event_ID" Type="int" Nullable="false" />
+    <Property Name="Team_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Event_Games">
+    <End Role="Games" Type="AAULANHOMEPAGEModel.Store.Games" Multiplicity="0..1" />
+    <End Role="Event" Type="AAULANHOMEPAGEModel.Store.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Games">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="GAMEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_LAN">
+    <End Role="LAN" Type="AAULANHOMEPAGEModel.Store.LAN" Multiplicity="1" />
+    <End Role="Event" Type="AAULANHOMEPAGEModel.Store.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LAN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="LANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SeatSeatingPlan">
+    <End Role="Seat" Type="AAULANHOMEPAGEModel.Store.Seat" Multiplicity="*" />
+    <End Role="SeatingPlan" Type="AAULANHOMEPAGEModel.Store.SeatingPlan" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SeatingPlan">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Seat">
+        <PropertyRef Name="SeatingPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SeatingPlanLAN">
+    <End Role="SeatingPlan" Type="AAULANHOMEPAGEModel.Store.SeatingPlan" Multiplicity="*" />
+    <End Role="LAN" Type="AAULANHOMEPAGEModel.Store.LAN" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LAN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SeatingPlan">
+        <PropertyRef Name="LANID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserSeat">
+    <End Role="User" Type="AAULANHOMEPAGEModel.Store.User" Multiplicity="0..1" />
+    <End Role="Seat" Type="AAULANHOMEPAGEModel.Store.Seat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Seat">
+        <PropertyRef Name="User_Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamMemberUser">
+    <End Role="TeamMember" Type="AAULANHOMEPAGEModel.Store.TeamMemberSet" Multiplicity="*" />
+    <End Role="User" Type="AAULANHOMEPAGEModel.Store.User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="TeamMember">
+        <PropertyRef Name="User_Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeamMemberTeam_TeamMember">
+    <End Role="TeamMember" Type="AAULANHOMEPAGEModel.Store.TeamMemberSet" Multiplicity="1" />
+    <End Role="TeamMemberTeam" Type="AAULANHOMEPAGEModel.Store.TeamMemberTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TeamMember">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeamMemberTeam">
+        <PropertyRef Name="TeamMember_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeamMemberTeam_Team">
+    <End Role="TeamMemberTeam" Type="AAULANHOMEPAGEModel.Store.TeamMemberTeam" Multiplicity="*" />
+    <End Role="Team" Type="AAULANHOMEPAGEModel.Store.TeamSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeamMemberTeam">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTeam_Event">
+    <End Role="Event" Type="AAULANHOMEPAGEModel.Store.Event" Multiplicity="1" />
+    <End Role="EventTeam" Type="AAULANHOMEPAGEModel.Store.EventTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EventTeam">
+        <PropertyRef Name="Event_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTeam_Team">
+    <End Role="EventTeam" Type="AAULANHOMEPAGEModel.Store.EventTeam" Multiplicity="*" />
+    <End Role="Team" Type="AAULANHOMEPAGEModel.Store.TeamSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTeam">
+        <PropertyRef Name="Team_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

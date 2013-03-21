@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AAULANHOMEPAGEModelStoreContainer" CdmEntityContainer="AAULANHOMEPAGEEntities1">
+    <EntitySetMapping Name="Event">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Event)">
+        <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="LANID" ColumnName="LANID" />
+          <ScalarProperty Name="GAMEID" ColumnName="GAMEID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Rules" ColumnName="Rules" />
+          <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Games)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DL_Link" ColumnName="DL_Link" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LAN">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.LAN)">
+        <MappingFragment StoreEntitySet="LAN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mad">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Mad)">
+        <MappingFragment StoreEntitySet="Mad">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="EVENTID" ColumnName="EVENTID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.User)">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seat">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Seat)">
+        <MappingFragment StoreEntitySet="Seat">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Taken" ColumnName="Taken" />
+          <ScalarProperty Name="SeatingPlanId" ColumnName="SeatingPlanId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeatingPlan">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.SeatingPlan)">
+        <MappingFragment StoreEntitySet="SeatingPlan">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LANID" ColumnName="LANID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PizzaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Pizza)">
+        <MappingFragment StoreEntitySet="PizzaSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeamSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.Team)">
+        <MappingFragment StoreEntitySet="TeamSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="StandaloneTeam" ColumnName="StandaloneTeam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeamMemberSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AAULANHOMEPAGEModel.TeamMember)">
+        <MappingFragment StoreEntitySet="TeamMemberSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserSeat" TypeName="AAULANHOMEPAGEModel.UserSeat" StoreEntitySet="Seat">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Username" ColumnName="User_Username" />
+      </EndProperty>
+      <EndProperty Name="Seat">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="User_Username" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TeamMemberUser" TypeName="AAULANHOMEPAGEModel.TeamMemberUser" StoreEntitySet="TeamMemberSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Username" ColumnName="User_Username" />
+      </EndProperty>
+      <EndProperty Name="TeamMember">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TeamMemberTeam" TypeName="AAULANHOMEPAGEModel.TeamMemberTeam" StoreEntitySet="TeamMemberTeam">
+      <EndProperty Name="TeamMember">
+        <ScalarProperty Name="Id" ColumnName="TeamMember_Id" />
+      </EndProperty>
+      <EndProperty Name="Team">
+        <ScalarProperty Name="Id" ColumnName="Team_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EventTeam" TypeName="AAULANHOMEPAGEModel.EventTeam" StoreEntitySet="EventTeam">
+      <EndProperty Name="Event">
+        <ScalarProperty Name="ID" ColumnName="Event_ID" />
+      </EndProperty>
+      <EndProperty Name="Team">
+        <ScalarProperty Name="Id" ColumnName="Team_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

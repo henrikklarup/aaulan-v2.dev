@@ -1,0 +1,159 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<title>AAULAN</title>
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" language="javascript">
+        var javascript_countdown = function () {
+            var timeLeft = 10; //number of seconds for countdown
+            var keepCounting = 1;
+            var noTimeLeftMessage = 'Intet at vise!';
+            function countdown() {
+                if (timeLeft < 2) {
+                    keepCounting = 0;
+                }
+                timeLeft = timeLeft - 1;
+            }
+            function addLeadingZero(n) {
+                if (n.toString().length < 2) {
+                    return '0' + n;
+                } else {
+                    return n;
+                }
+            }
+            function formatOutput() {
+                var hours, minutes, seconds;
+                seconds = timeLeft % 60;
+                minutes = Math.floor(timeLeft / 60) % 60;
+                hours = Math.floor(timeLeft / 3600);
+                seconds = addLeadingZero(seconds);
+                minutes = addLeadingZero(minutes);
+                hours = addLeadingZero(hours);
+                return 'Bestil Pizza inden: ' + hours + ':' + minutes + ':' + seconds;
+            }
+            function showTimeLeft() {
+                document.getElementById('javascript_countdown_time').innerHTML = formatOutput(); //time_left;
+            }
+            function noTimeLeft() {
+                document.getElementById('javascript_countdown_time').innerHTML = noTimeLeftMessage;
+            }
+            return {
+                count: function () {
+                    countdown();
+                    showTimeLeft();
+                },
+                timer: function () {
+                    javascript_countdown.count();
+                    if (keepCounting) {
+                        setTimeout("javascript_countdown.timer();", 1000);
+                    } else {
+                        noTimeLeft();
+                    }
+                },
+                init: function (n) {
+                    timeLeft = n;
+                    javascript_countdown.timer();
+                }
+            };
+        } ();
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="jquery.ui.combined" />            
+            </Scripts>
+        </asp:ScriptManager>
+
+    </asp:ContentPlaceHolder>
+
+    <title><asp:ContentPlaceHolder ID="Title" runat="server" /></title>
+    
+</head>
+
+<body>
+<% var repo = new AAULAN.Models.DatabaseReposity(); %>
+<% var pizzatime = repo.GetCurrentPizzaEvent(); %>
+
+<div id="login" class="login">
+<% var emptyUser = new AAULAN.Models.User(); %>
+<% Html.RenderPartial("LoginBox", emptyUser); %>
+</div>
+
+<%-- ReSharper disable UnknownCssClass --%>
+<div class="slogo" id="slogo">
+<%-- ReSharper restore UnknownCssClass --%>
+    <img src="../../Content/Studentersamfundet-hvid.png" alt="slogo" height="400" style="opacity:0.3;filter:alpha(opacity=30)" />
+</div>
+
+<div class="topbanner">
+    <img alt="LOGO" height="200" src="../../Content/aaulanlogo.png" />
+</div>
+
+<div class="main">
+    <div class="menucontainer">
+<%-- ReSharper disable Asp.Warning --%>
+        <ul id="menu">              
+<%-- ReSharper restore Asp.Warning --%>
+            <li><%: Html.ActionLink("Home", "Index", "Home")%></li>
+            <li><%: Html.ActionLink("Order Pizza", "Index", "Order")%></li>
+            <li><%: Html.ActionLink("Games", "AllGames", "Admin") %></li>
+            <li><a href="http://aaulan.challonge.com" target="_blank">Tournaments</a></li>
+        </ul>
+    </div>
+        <div class="menucontainer" style="font-size:30px; font-family:'tahoma';">
+            <div style="text-align: center;" >IRC: #aaulan @ freenode | Mumble: 192.38.55.147:57564</div>
+        </div>
+            
+    <%if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Administrator") || Context.User.IsInRole("Crew") || Context.User.IsInRole("User")))
+        {%>
+        <div class="menucontainer">
+<%-- ReSharper disable Asp.Warning --%>
+            <ul id="menu">
+<%-- ReSharper restore Asp.Warning --%>
+                <%if (Context.User.IsInRole("Administrator") || Context.User.IsInRole("Crew"))
+                  { %>
+                <li><%: Html.ActionLink("Users", "RoleAssignment", "Admin") %></li>
+                <li><%: Html.ActionLink("Lans", "AllLans", "Admin") %></li>
+                <li><%: Html.ActionLink("Events", "AllEvents", "Admin") %></li>
+                <li><%: Html.ActionLink("Orders", "AllOrders", "Order") %></li>
+                <li><%: Html.ActionLink("Pizzas", "AllPizzas", "Order") %></li>
+                <br/>
+                <li><%: Html.ActionLink("Seating Planning", "SeatingPlanning", "Admin") %></li>
+                <% } %>
+                <li><%: Html.ActionLink("Edit User", "Edit", "Login") %></li>
+                <li><%: Html.ActionLink("Seating Chart", "SeatingChart", "Admin") %></li>
+                <li><%: Html.ActionLink("Sign up","SignUp", "Team") %></li>
+                <li><%: Html.ActionLink("See signups","AllGameEvents", "Team") %></li>
+            </ul>
+        </div>
+        <%} %>
+
+    <div id="javascript_countdown_time" class="maincontent">
+    <script type="text/javascript" language="javascript">
+        <% if (pizzatime == null)
+        { %>
+            javascript_countdown.init(0);
+        <%}
+        else
+        { %>
+            javascript_countdown.init(<%: pizzatime.TimeToStart() %>);
+        <%} %>
+    </script>
+    </div>
+
+    <div class="maincontent">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+
+    <div id="footer" class="footer">
+        <div style="text-align: center;" ><f>© Copyright Studentersamfundet 2013</f></div>
+    </div>
+</div>
+</body>
+</html>
